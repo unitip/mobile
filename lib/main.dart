@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:unitip/core/application.dart';
 
 void main() {
-  runApp(UnitipApplication());
+  runApp(
+    ProviderScope(
+      child: UnitipApplication(),
+    ),
+  );
 }
