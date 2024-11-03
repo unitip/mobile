@@ -5,6 +5,15 @@ import 'package:unitip/core/router/router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(page: HomeRoute.page),
+        AutoRoute(
+          page: HomeRoute.page,
+          initial: true,
+          children: [
+            AutoRoute(page: HomeDashboardRoute.page),
+            AutoRoute(page: HomeJobsRoute.page),
+            AutoRoute(page: HomeOffersRoute.page),
+            AutoRoute(page: HomeSettingsRoute.page),
+          ],
+        ),
       ];
 }
