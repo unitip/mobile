@@ -12,7 +12,7 @@ class HomeJobsScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Jobs'),
+        title: const Text('Jobs'),
       ),
       body: Center(
         child: Text(

@@ -9,7 +9,16 @@ class HomeSettingsScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
+      ),
+      body: const SingleChildScrollView(
+        child: Column(
+          children: [
+            ListTile(
+              title: Text('Keluar'),
+            ),
+          ],
+        ),
       ),
     );
   }

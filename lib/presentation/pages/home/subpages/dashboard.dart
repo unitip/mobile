@@ -14,7 +14,7 @@ class HomeDashboardScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'),
+        title: const Text('Dashboard'),
       ),
       body: Center(
         child: Column(
@@ -29,12 +29,12 @@ class HomeDashboardScreen extends HookConsumerWidget {
                 FilledButton(
                   onPressed: () =>
                       ref.read(counterProvider.notifier).increment(),
-                  child: Text('Increment'),
+                  child: const Text('Increment'),
                 ),
                 FilledButton(
                   onPressed: () =>
                       ref.read(counterProvider.notifier).decrement(),
-                  child: Text('Decrement'),
+                  child: const Text('Decrement'),
                 ),
               ],
             )

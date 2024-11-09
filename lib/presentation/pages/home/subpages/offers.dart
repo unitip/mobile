@@ -9,7 +9,7 @@ class HomeOffersScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Offers'),
+        title: const Text('Offers'),
       ),
     );
   }
