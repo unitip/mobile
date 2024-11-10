@@ -2,7 +2,39 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:unitip/presentation/providers/authentication.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:unitip/core/failure/failure.dart';
+import 'package:unitip/core/providers/provider.dart';
+
+part 'screen.g.dart';
+
+@riverpod
+class _Auth extends _$Auth {
+  @override
+  FutureOr<void> build() {}
+
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
+    state = AsyncLoading();
+
+    final response = await ref
+        .read(authenticationRepositoryProvider)
+        .login(email: email, password: password);
+
+    response.fold(
+      (l) => state = AsyncError(l, StackTrace.current),
+      (r) => state = AsyncData(null),
+    );
+  }
+
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+  }) async {}
+}
 
 @RoutePage()
 class AuthScreen extends HookConsumerWidget {
@@ -20,15 +52,17 @@ class AuthScreen extends HookConsumerWidget {
     final controllerPassword = useTextEditingController(text: 'password');
     final controllerConfirmPassword = useTextEditingController();
 
-    final authentication = ref.watch(authenticationProvider);
+    final authentication = ref.watch(_authProvider);
 
     ref.listen(
-      authenticationProvider,
+      _authProvider,
       (previous, next) {
-        if (next.hasError && previous?.error != next.error) {
+        if (next.hasError &&
+            previous?.error != next.error &&
+            next.error is Failure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(next.error.toString()),
+              content: Text((next.error as Failure).message),
             ),
           );
         }
@@ -142,14 +176,12 @@ class AuthScreen extends HookConsumerWidget {
                               final password = controllerPassword.text;
 
                               if (isLogin.value) {
-                                ref.read(authenticationProvider.notifier).login(
+                                ref.read(_authProvider.notifier).login(
                                       email: email,
                                       password: password,
                                     );
                               } else {
-                                ref
-                                    .read(authenticationProvider.notifier)
-                                    .register(
+                                ref.read(_authProvider.notifier).register(
                                       name: name,
                                       email: email,
                                       password: password,
