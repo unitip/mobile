@@ -33,7 +33,10 @@ class ListOptions extends ConsumerWidget {
                       .logout()
                       .then((_) {
                     if (context.mounted) {
-                      context.router.popAndPush(HomeRoute());
+                      context.router.pushAndPopUntil(
+                        HomeRoute(),
+                        predicate: (route) => route is HomeRoute,
+                      );
                     }
                   }),
                   child: Text('Keluar'),

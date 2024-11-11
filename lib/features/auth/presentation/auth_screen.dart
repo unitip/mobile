@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:unitip/exceptions/failure.dart';
+import 'package:unitip/routing/router.gr.dart';
 import 'package:unitip/shared/providers/authentication.dart';
 
 @RoutePage()
@@ -26,14 +27,17 @@ class AuthScreen extends HookConsumerWidget {
     ref.listen(
       authenticationProvider,
       (previous, next) {
-        if (next.hasError &&
-            previous?.error != next.error &&
-            next.error is Failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text((next.error as Failure).message),
-            ),
-          );
+        if (next.hasError) {
+          if (previous?.error != next.error && next.error is Failure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text((next.error as Failure).message),
+              ),
+            );
+          }
+        } else {
+          // success, maka redirect ke halaman home
+          context.router.replace(HomeRoute());
         }
       },
     );
