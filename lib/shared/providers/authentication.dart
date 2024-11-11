@@ -23,7 +23,12 @@ class Authentication extends _$Authentication {
     required String password,
   }) async {}
 
-  Future<void> logout() async {}
+  Future<void> logout() async {
+    final repository = ref.read(authenticationRepositoryProvider);
+    await repository.logout();
+
+    ref.invalidateSelf();
+  }
 
   Future<void> register({
     required String name,
