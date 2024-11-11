@@ -14,9 +14,12 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
+        // authentication
         AutoRoute(
           page: AuthRoute.page,
         ),
+
+        // home
         AutoRoute(
           page: HomeRoute.page,
           initial: true,
@@ -30,8 +33,19 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: DashboardRoute.page),
             AutoRoute(page: JobRoute.page),
             AutoRoute(page: OfferRoute.page),
-            AutoRoute(page: ChatRoute.page),
+            AutoRoute(page: ListChatRoute.page),
             AutoRoute(page: SettingRoute.page),
+          ],
+        ),
+
+        // chat
+        AutoRoute(
+          page: ChatRoute.page,
+          guards: [
+            AuthGuard(
+              authenticationRepository:
+                  ref.read(authenticationRepositoryProvider),
+            )
           ],
         ),
       ];

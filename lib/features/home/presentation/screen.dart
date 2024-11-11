@@ -14,7 +14,7 @@ class HomeScreen extends HookConsumerWidget {
         DashboardRoute(),
         JobRoute(),
         OfferRoute(),
-        ChatRoute(),
+        ListChatRoute(),
         SettingRoute(),
       ],
       bottomNavigationBuilder: (context, tabsRouter) => NavigationBar(
