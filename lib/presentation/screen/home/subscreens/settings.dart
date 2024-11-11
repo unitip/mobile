@@ -11,11 +11,17 @@ class HomeSettingsScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text('Settings'),
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
+            Text('Nama'),
+            Text('Alamat email'),
+            Text('user id'),
+            Divider(),
             ListTile(
+              leading: Icon(Icons.logout_rounded),
               title: Text('Keluar'),
+              onTap: () {},
             ),
           ],
         ),

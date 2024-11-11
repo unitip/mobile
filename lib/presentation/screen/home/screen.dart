@@ -13,12 +13,14 @@ class HomeScreen extends StatelessWidget {
         HomeDashboardRoute(),
         HomeJobsRoute(),
         HomeOffersRoute(),
+        HomeChatsRoute(),
         HomeSettingsRoute(),
       ],
       bottomNavigationBuilder: (context, tabsRouter) {
         return NavigationBar(
           selectedIndex: tabsRouter.activeIndex,
           onDestinationSelected: tabsRouter.setActiveIndex,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.dashboard_rounded),
@@ -31,6 +33,10 @@ class HomeScreen extends StatelessWidget {
             NavigationDestination(
               icon: Icon(Icons.local_offer_rounded),
               label: 'Offers',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.chat_rounded),
+              label: 'Chats',
             ),
             NavigationDestination(
               icon: Icon(Icons.settings_rounded),

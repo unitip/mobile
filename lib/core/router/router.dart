@@ -30,6 +30,7 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: HomeDashboardRoute.page),
             AutoRoute(page: HomeJobsRoute.page),
             AutoRoute(page: HomeOffersRoute.page),
+            AutoRoute(page: HomeChatsRoute.page),
             AutoRoute(page: HomeSettingsRoute.page),
           ],
         ),
