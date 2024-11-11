@@ -9,7 +9,7 @@ Future<void> main() async {
 
   runApp(
     ProviderScope(
-      child: UnitipApplication(),
+      child: const UnitipApplication(),
     ),
   );
 }

@@ -14,7 +14,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   final _preferencesAsync = SharedPreferencesAsync();
 
   @override
-  Future<Either<Failure, void>> login({
+  Future<Either<Failure, AuthenticatedUser>> login({
     required String email,
     required String password,
   }) async {
@@ -31,7 +31,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         return Left(Failure(message: response.body));
       }
 
-      return Right(null);
+      return Right(
+        AuthenticatedUser.fromJson(
+          jsonDecode(response.body),
+        ),
+      );
     } catch (_) {
       return Left(
         Failure(message: 'Terjadi kesalahan tak terduga!'),
@@ -40,7 +44,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<bool> register({
+  Future<Either<Failure, void>> register({
     required String name,
     required String email,
     required String password,
@@ -50,13 +54,16 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<AuthenticatedUser> getSession() async {
+  Future<Either<Failure, AuthenticatedUser>> getSession() async {
     final session = await _preferencesAsync.getString(_authenticatedUserKey);
-    if (session == null) throw Exception('Sesi tidak ditemukan!');
 
-    return AuthenticatedUser.fromJson(
+    if (session == null) {
+      return Left(Failure(message: 'Sesi tidak ditemukan!'));
+    }
+
+    return Right(AuthenticatedUser.fromJson(
       jsonDecode(session),
-    );
+    ));
   }
 
   @override

@@ -3,12 +3,12 @@ import 'package:unitip/core/failure/failure.dart';
 import 'package:unitip/data/models/authenticated_user.dart';
 
 abstract class AuthenticationRepository {
-  Future<Either<Failure, void>> login({
+  Future<Either<Failure, AuthenticatedUser>> login({
     required String email,
     required String password,
   });
 
-  Future<bool> register({
+  Future<Either<Failure, void>> register({
     required String name,
     required String email,
     required String password,
@@ -20,5 +20,5 @@ abstract class AuthenticationRepository {
     required AuthenticatedUser authenticatedUser,
   });
 
-  Future<AuthenticatedUser> getSession();
+  Future<Either<Failure, AuthenticatedUser>> getSession();
 }

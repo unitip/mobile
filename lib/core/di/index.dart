@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:unitip/data/repositories/authentication.dart';
 
-part 'provider.g.dart';
+part 'index.g.dart';
 
 @riverpod
 String helloWorld(Ref ref) {

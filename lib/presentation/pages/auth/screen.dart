@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:unitip/core/di/index.dart';
 import 'package:unitip/core/failure/failure.dart';
-import 'package:unitip/core/providers/provider.dart';
 
 part 'screen.g.dart';
 
@@ -25,7 +25,14 @@ class _Auth extends _$Auth {
 
     response.fold(
       (l) => state = AsyncError(l, StackTrace.current),
-      (r) => state = AsyncData(null),
+      (r) async {
+        // simpan sesi login ke shared preferences
+        await ref
+            .read(authenticationRepositoryProvider)
+            .saveSession(authenticatedUser: r);
+
+        state = AsyncData(null);
+      },
     );
   }
 
@@ -33,7 +40,18 @@ class _Auth extends _$Auth {
     required String name,
     required String email,
     required String password,
-  }) async {}
+  }) async {
+    state = AsyncLoading();
+
+    final response = await ref
+        .read(authenticationRepositoryProvider)
+        .register(name: name, email: email, password: password);
+
+    response.fold(
+      (l) => state = AsyncError(l, StackTrace.current),
+      (r) => state = AsyncData(null),
+    );
+  }
 }
 
 @RoutePage()
