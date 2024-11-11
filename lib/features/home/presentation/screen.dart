@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:unitip/routing/router.gr.dart';
 
 @RoutePage()
 class HomeScreen extends HookConsumerWidget {
@@ -9,7 +10,17 @@ class HomeScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AutoTabsScaffold(
+      routes: [
+        DashboardRoute(),
+        JobRoute(),
+        OfferRoute(),
+        ChatRoute(),
+        SettingRoute(),
+      ],
       bottomNavigationBuilder: (context, tabsRouter) => NavigationBar(
+        selectedIndex: tabsRouter.activeIndex,
+        onDestinationSelected: (index) => tabsRouter.setActiveIndex(index),
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: [
           NavigationDestination(
             icon: Icon(Icons.dashboard_rounded),
